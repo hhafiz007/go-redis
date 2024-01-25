@@ -30,9 +30,11 @@ func main() {
 		os.Exit(1)
 	}
 
-	conn, _ := l.Accept()
-	defer conn.Close()
-	handleConnection(conn)
+	for {
+		conn, _ := l.Accept()
+		defer conn.Close()
+		go handleConnection(conn)
+	}
 
 	if err != nil {
 		fmt.Println("Error accepting connection: ", err.Error())
