@@ -10,7 +10,7 @@ import (
 func handleConnection(conn net.Conn) {
 	serverAlive := []byte("+PONG\r\n")
 
-	for i := 0; i < 2; i++ {
+	for {
 		buf := make([]byte, 256)
 		_, _ = conn.Read(buf)
 		if len(buf) > 0 {
