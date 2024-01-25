@@ -31,6 +31,7 @@ func main() {
 	}
 
 	conn, _ := l.Accept()
+	defer conn.Close()
 	handleConnection(conn)
 
 	if err != nil {
