@@ -7,9 +7,21 @@ import (
 	"os"
 )
 
-func main() {
-
+func handleConnection(conn net.Conn) {
 	serverAlive := []byte("+PONG\r\n")
+
+	for i := 0; i < 2; i++ {
+		buf := make([]byte, 256)
+		_, _ = conn.Read(buf)
+		if len(buf) > 0 {
+			conn.Write(serverAlive)
+		}
+
+	}
+
+}
+
+func main() {
 
 	l, err := net.Listen("tcp", "0.0.0.0:6379")
 	fmt.Println("Listening to connections", l)
@@ -18,12 +30,8 @@ func main() {
 		os.Exit(1)
 	}
 
-	for i := 0; i < 2; i++ {
-
-		conn, _ := l.Accept()
-		_, err = conn.Write(serverAlive)
-
-	}
+	conn, _ := l.Accept()
+	handleConnection(conn)
 
 	if err != nil {
 		fmt.Println("Error accepting connection: ", err.Error())
