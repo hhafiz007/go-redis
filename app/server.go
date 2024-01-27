@@ -31,7 +31,7 @@ func handleConnection(conn net.Conn) {
 			fmt.Printf("Sending ping to client\n")
 			conn.Write([]byte("+PONG\r\n"))
 		case "echo":
-			fmt.Printf("Sending echo to client\n")
+			fmt.Printf("Sending echoo to client\n")
 			// conn.Write(redisArguments[0].bytes)
 			conn.Write([]byte("+PONG\r\n"))
 
