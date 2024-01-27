@@ -10,6 +10,7 @@ import (
 
 func handleConnection(conn net.Conn) {
 	defer conn.Close()
+	fmt.Println("Listening to connection", conn)
 
 	for {
 
