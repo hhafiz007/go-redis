@@ -49,7 +49,7 @@ func parseArray(stream *bufio.Reader) (RedisMessage, error) {
 		return RedisMessage{}, err
 	}
 
-	items := int(bytes[0])
+	items, _ := strconv.Atoi(string(bytes[0]))
 
 	myMsg := RedisMessage{
 		typ: Array,
