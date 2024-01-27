@@ -18,9 +18,9 @@ func handleConnection(conn net.Conn) {
 			fmt.Println("Failed to bind to port 6379")
 			os.Exit(1)
 		}
-		fmt.Println(redisMessage)
+		fmt.Println("redis message is", redisMessage)
 		redisCommand := string(redisMessage.array[0].bytes)
-		fmt.Println(redisCommand)
+		fmt.Println("redis command is", redisCommand)
 		// redisArguments := redisMessage.array[1:]
 
 		switch redisCommand {
