@@ -98,7 +98,7 @@ func parseBulkString(stream *bufio.Reader) (RedisMessage, error) {
 		return RedisMessage{}, err
 	}
 
-	length, _ := strconv.Atoi(bytes[0])
+	length, _ := strconv.Atoi(string(bytes[0]))
 	data := make([]byte, length+2)
 
 	_, err = stream.Read(data)
