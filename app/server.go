@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 
 	"net"
@@ -8,13 +9,28 @@ import (
 )
 
 func handleConnection(conn net.Conn) {
-	serverAlive := []byte("+PONG\r\n")
 
 	for {
-		buf := make([]byte, 256)
-		_, _ = conn.Read(buf)
-		if len(buf) > 0 {
-			conn.Write(serverAlive)
+
+		redisMessage, err := handleRedisMessage(bufio.NewReader(conn))
+		if err != nil {
+			fmt.Println("Failed to bind to port 6379")
+			os.Exit(1)
+		}
+		fmt.Println(redisMessage)
+		redisCommand := string(redisMessage.array[0].bytes)
+		// redisArguments := redisMessage.Array()[1:]
+
+		switch redisCommand {
+		default:
+			return
+		case "ping":
+			fmt.Printf("Sending ping to client\n")
+			conn.Write([]byte("+PONG\r\n"))
+		case "echo":
+			fmt.Printf("Sending echo to client\n")
+			conn.Write([]byte("+PONG\r\n"))
+
 		}
 
 	}
@@ -30,15 +46,15 @@ func main() {
 		os.Exit(1)
 	}
 
+	// Will keep on running a for loop for accepting mu
 	for {
-		conn, _ := l.Accept()
+		conn, err := l.Accept()
 		defer conn.Close()
-		go handleConnection(conn)
-	}
-
-	if err != nil {
-		fmt.Println("Error accepting connection: ", err.Error())
-		os.Exit(1)
+		if err != nil {
+			fmt.Println("Failed to bind to port 6379")
+			os.Exit(1)
+		}
+		handleConnection(conn)
 	}
 
 }
