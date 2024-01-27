@@ -21,7 +21,7 @@ const (
 )
 
 func handleRedisMessage(stream *bufio.Reader) (RedisMessage, error) {
-
+	fmt.Println("handling redis message")
 	dataType, err := stream.ReadByte()
 	fmt.Println("Data Type", dataType)
 	if err != nil {
