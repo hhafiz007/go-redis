@@ -21,7 +21,7 @@ func handleConnection(conn net.Conn) {
 		fmt.Println("redis message is", redisMessage)
 		redisCommand := string(redisMessage.array[0].bytes)
 		fmt.Println("redis command is", redisCommand)
-		// redisArguments := redisMessage.array[1:]
+		redisArguments := redisMessage.array[1:]
 
 		switch redisCommand {
 		default:
@@ -33,7 +33,7 @@ func handleConnection(conn net.Conn) {
 		case "echo":
 			fmt.Printf("Sending echoo to client\n")
 			// conn.Write(redisArguments[0].bytes)
-			conn.Write([]byte("+PONG\r\n"))
+			conn.Write([]byte(fmt.Sprintf("$%d\r\n%s\r\n", len(string(redisArguments[0].bytes)), string(redisArguments[0].bytes))))
 
 		}
 
