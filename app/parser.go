@@ -63,6 +63,8 @@ func parseArray(stream *bufio.Reader) (RedisMessage, error) {
 		myMsg.array = append(myMsg.array, curMsg)
 	}
 
+	fmt.Println("Array is", myMsg)
+
 	return myMsg, nil
 
 }
@@ -79,6 +81,7 @@ func parseSimpleString(stream *bufio.Reader) (RedisMessage, error) {
 		typ:   SimpleString,
 		bytes: currString[:len(currString)-2],
 	}
+	fmt.Println("Simple String is", myMsg)
 
 	return myMsg, nil
 
@@ -104,6 +107,8 @@ func parseBulkString(stream *bufio.Reader) (RedisMessage, error) {
 		typ:   BulkString,
 		bytes: data[:len(data)-2],
 	}
+
+	fmt.Println("Bulk String is", myMsg)
 
 	return myMsg, nil
 
