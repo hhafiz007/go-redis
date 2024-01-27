@@ -25,8 +25,7 @@ func handleConnection(conn net.Conn) {
 
 		switch redisCommand {
 		default:
-			fmt.Printf("Sending answer to client\n")
-			conn.Write([]byte(fmt.Sprintf("-ERR INVALID COMMAND %s\r\n", redisCommand)))
+			return
 		case "ping":
 			fmt.Printf("Sending ping to client\n")
 			conn.Write([]byte("+PONG\r\n"))
