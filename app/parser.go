@@ -113,7 +113,7 @@ func parseBulkString(stream *bufio.Reader) (RedisMessage, error) {
 		bytes: data[:len(data)-2],
 	}
 
-	fmt.Println("Bulk String is", myMsg)
+	fmt.Println("Bulk String is", myMsg, string(myMsg.bytes))
 
 	return myMsg, nil
 
