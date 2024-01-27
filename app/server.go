@@ -19,6 +19,7 @@ func handleConnection(conn net.Conn) {
 		}
 		fmt.Println(redisMessage)
 		redisCommand := string(redisMessage.array[0].bytes)
+		fmt.Println(redisCommand)
 		// redisArguments := redisMessage.Array()[1:]
 
 		switch redisCommand {
