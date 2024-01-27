@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"strconv"
 )
 
 type RedisMessageType byte
@@ -97,7 +98,8 @@ func parseBulkString(stream *bufio.Reader) (RedisMessage, error) {
 		return RedisMessage{}, err
 	}
 
-	data := make([]byte, int(bytes[0])+2)
+	length, _ := strconv.Atoi(bytes[0])
+	data := make([]byte, length+2)
 
 	_, err = stream.Read(data)
 
