@@ -10,10 +10,9 @@ import (
 
 func handleConnection(conn net.Conn) {
 	defer conn.Close()
-	fmt.Println("Listening to connection", conn)
 
 	for {
-
+		fmt.Println("Listening to connection", conn)
 		redisMessage, err := handleRedisMessage(bufio.NewReader(conn))
 		if err != nil {
 			fmt.Println("Failed to bind to port 6379")
@@ -26,7 +25,7 @@ func handleConnection(conn net.Conn) {
 
 		switch redisCommand {
 		default:
-			return
+			break
 		case "ping":
 			fmt.Printf("Sending ping to client\n")
 			conn.Write([]byte("+PONG\r\n"))
