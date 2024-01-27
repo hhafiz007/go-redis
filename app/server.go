@@ -33,6 +33,7 @@ func handleConnection(conn net.Conn) {
 		case "echo":
 			fmt.Printf("Sending echo to client\n")
 			// conn.Write(redisArguments[0].bytes)
+			conn.Write([]byte("+PONG\r\n"))
 
 		}
 
