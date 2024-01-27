@@ -56,12 +56,13 @@ func parseArray(stream *bufio.Reader) (RedisMessage, error) {
 
 	for i := 0; i < items; i += 1 {
 		curMsg, err := handleRedisMessage(stream)
-		fmt.Println("Current Array messaged is", curMsg)
+
 		if err != nil {
 			fmt.Println("Error reading array")
 			return RedisMessage{}, err
 		}
 		myMsg.array = append(myMsg.array, curMsg)
+		fmt.Println("Current Array messaged is", curMsg)
 	}
 
 	fmt.Println("Array is", myMsg)
