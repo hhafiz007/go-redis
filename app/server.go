@@ -9,6 +9,7 @@ import (
 )
 
 func handleConnection(conn net.Conn) {
+	defer conn.Close()
 
 	for {
 
@@ -50,7 +51,7 @@ func main() {
 	// Will keep on running a for loop for accepting mu
 	for {
 		conn, err := l.Accept()
-		defer conn.Close()
+
 		if err != nil {
 			fmt.Println("Failed to bind to port 6379")
 			os.Exit(1)
