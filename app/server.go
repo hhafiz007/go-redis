@@ -47,7 +47,7 @@ func handleConnection(conn net.Conn) {
 		redisMessage, err := handleRedisMessage(bufio.NewReader(conn))
 		if err != nil {
 			fmt.Println("Failed to bind to port 6379")
-			os.Exit(1)
+			return
 		}
 		fmt.Println("redis message is", redisMessage)
 		redisCommand := string(redisMessage.array[0].bytes)
