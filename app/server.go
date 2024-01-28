@@ -8,6 +8,8 @@ import (
 	"os"
 )
 
+var myMap map[string]string
+
 func handleConnection(conn net.Conn) {
 	defer conn.Close()
 
@@ -34,6 +36,13 @@ func handleConnection(conn net.Conn) {
 			fmt.Printf("Sending echoo to client\n")
 			// conn.Write(redisArguments[0].bytes)
 			conn.Write([]byte(fmt.Sprintf("$%d\r\n%s\r\n", len(string(redisArguments[0].bytes)), string(redisArguments[0].bytes))))
+		case "set":
+
+			key := string(redisArguments[0].bytes)
+			value := string(redisArguments[1].bytes)
+			myMap[key] = value
+			fmt.Printf("Sending set to client with key and value %s %s\n", key, value)
+			conn.Write([]byte("+PONG\r\n"))
 
 		}
 
@@ -49,6 +58,8 @@ func main() {
 		fmt.Println("Failed to bind to port 6379")
 		os.Exit(1)
 	}
+
+	myMap = make(map[string]string)
 
 	// Will keep on running a for loop for accepting mu
 	for {
