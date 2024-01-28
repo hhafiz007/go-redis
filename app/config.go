@@ -163,14 +163,14 @@ func (rdb *rdbFile) handleKeyValue(currentInd int, fileCont []byte, hasExpiry bo
 
 	currentInd += 1
 
-	fmt.Printf("index value is ,%d", int(fileCont[currentInd]))
+	// fmt.Printf("index value is ,%d", int(fileCont[currentInd]))
 
-	keySizeInd := currentInd
-	_, currentInd = getLength(currentInd, fileCont)
-	key := string(fileCont[keySizeInd+1 : currentInd])
-	valueSizeInd := currentInd
-	_, currentInd = getLength(currentInd, fileCont)
-	value := string(fileCont[valueSizeInd+1 : currentInd])
+	// keySizeInd := currentInd
+	keyLength, currentInd := getLength(currentInd, fileCont)
+	key := string(fileCont[currentInd : currentInd+keyLength])
+	currentInd += keyLength
+	valueLength, currentInd := getLength(currentInd, fileCont)
+	value := string(fileCont[currentInd : currentInd+valueLength])
 
 	fmt.Println("The Keysize and valuesize from rdb file are", keySizeInd, valueSizeInd)
 
