@@ -94,6 +94,11 @@ func handleConnection(conn net.Conn) {
 				fmt.Printf("Sending get to cliegnt with key and value %s %s\n", key, value)
 				conn.Write([]byte(fmt.Sprintf("+%s\r\n", value)))
 			}
+		case "config":
+			configType := string(redisArguments[1].bytes)
+			configEncoded := configValues.encodeConfigValues(configType)
+			fmt.Printf("Sending Config to client : %s\n", configEncoded)
+			conn.Write([]byte(configEncoded))
 
 		}
 
@@ -108,25 +113,32 @@ func main() {
 	flag.Parse()
 	fmt.Println("dir:", *dir, len(*dir))
 	fmt.Println("dbfilename:", *dbfilename)
+	configValues = initConfigValues(dir, dbfilename)
 
-	l, err := net.Listen("tcp", "0.0.0.0:6379")
-	fmt.Println("Listening to connections", l)
-	if err != nil {
-		fmt.Println("Failed to bind to port 6379")
-		os.Exit(1)
-	}
+	switch {
 
-	myMap = make(map[string]redisValue)
+	default:
 
-	// Will keep on running a for loop for accepting mu
-	for {
-		conn, err := l.Accept()
-
+		l, err := net.Listen("tcp", "0.0.0.0:6379")
+		fmt.Println("Listening to connections", l)
 		if err != nil {
 			fmt.Println("Failed to bind to port 6379")
 			os.Exit(1)
 		}
-		go handleConnection(conn)
+
+		myMap = make(map[string]redisValue)
+
+		// Will keep on running a for loop for accepting mu
+		for {
+			conn, err := l.Accept()
+
+			if err != nil {
+				fmt.Println("Failed to bind to port 6379")
+				os.Exit(1)
+			}
+			go handleConnection(conn)
+		}
+
 	}
 
 }
