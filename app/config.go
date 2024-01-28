@@ -88,7 +88,7 @@ func unMarshalRdb(fileCont []byte) {
 
 	}
 
-	fmt.Println(rdbDumpData)
+	fmt.Println("hi", rdbDumpData)
 
 }
 
