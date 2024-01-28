@@ -118,6 +118,7 @@ func handleConnection(conn net.Conn) {
 
 			fmt.Println("The response is", response)
 			conn.Write([]byte(response))
+			return
 
 			// Convert the []byte to a string and print it
 			// fileContentStr := string(fileContent)
