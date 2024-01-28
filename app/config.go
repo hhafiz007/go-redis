@@ -17,7 +17,7 @@ type rdbFile struct {
 	resizeDb       string
 	AuxiliaryField string
 
-	myMap map[string]redisValue
+	data map[string]redisValue
 }
 
 const (
@@ -87,6 +87,8 @@ func unMarshalRdb(fileCont []byte) {
 		}
 
 	}
+
+	fmt.Println(rdbDumpData)
 
 }
 
@@ -175,6 +177,12 @@ func (rdb *rdbFile) handleKeyValue(currentInd int, fileCont []byte, hasExpiry bo
 	// fmt.Println("The Keysize and valuesize from rdb file are", keySizeInd, valueSizeInd)
 
 	fmt.Printf("The Key and value from rdb file are %s and %s", key, value)
+
+	rdb.data[key] = redisValue{
+		value:     value,
+		time:      time,
+		isLimited: hasExpiry,
+	}
 
 	return currentInd
 
