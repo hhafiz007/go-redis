@@ -54,7 +54,7 @@ func (cn *config) encodeConfigValues(configType string) string {
 	return fmt.Sprintf("*2\r\n$%d\r\n%s\r\n$%d\r\n%s\r\n", len(configType), configType, len(configTypeValue), configTypeValue)
 }
 
-func unMarshalRdb(fileCont []byte) {
+func unMarshalRdb(fileCont []byte) rdbFile {
 
 	rdbDumpData := rdbFile{
 		data: make(map[string]redisValue),
@@ -91,7 +91,7 @@ func unMarshalRdb(fileCont []byte) {
 
 	}
 
-	fmt.Println("hia", rdbDumpData)
+	return rdbDumpData
 
 }
 
@@ -187,7 +187,7 @@ func (rdb *rdbFile) handleKeyValue(currentInd int, fileCont []byte, hasExpiry bo
 		isLimited: hasExpiry,
 	}
 	currentInd += valueLength
-	fmt.Printf("index value is ,%d", int(fileCont[currentInd]))
+	// fmt.Printf("index value is ,%d", int(fileCont[currentInd]))
 
 	return currentInd
 

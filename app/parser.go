@@ -126,3 +126,15 @@ func parseBulkString(stream *bufio.Reader) (RedisMessage, error) {
 	return myMsg, nil
 
 }
+
+func getRespKeyArray(myMap map[string]redisValue) string {
+
+	myString := fmt.Sprintf("*%d\r\n", len(myMap))
+
+	for key, _ := range myMap {
+		myString += fmt.Sprintf("$%d\r\n%s\r\n", len(key), key)
+	}
+
+	return myString
+
+}

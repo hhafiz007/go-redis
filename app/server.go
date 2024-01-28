@@ -106,8 +106,18 @@ func handleConnection(conn net.Conn) {
 				log.Fatal("Error reading file:", err)
 			}
 			fmt.Println("Welcoe=me to keys")
-			unMarshalRdb(fileContent)
-			return
+			rdbDumpData := unMarshalRdb(fileContent)
+			keysCommand := string(redisArguments[0].bytes)
+			var response string
+
+			if keysCommand == "*" {
+				response = getRespKeyArray(rdbDumpData.data)
+			} else {
+				response = fmt.Sprintf("$%d\r\n%s\r\n", len(rdbDumpData.data[keysCommand].value), rdbDumpData.data[keysCommand].value)
+			}
+
+			fmt.Printf("The response is", response)
+			conn.Write([]byte(response))
 
 			// Convert the []byte to a string and print it
 			// fileContentStr := string(fileContent)
