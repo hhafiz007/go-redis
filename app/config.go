@@ -154,7 +154,7 @@ func (rdb *rdbFile) handleResizeDb(currentInd int, fileCont []byte) (string, int
 	currentInd += 1
 	hashSize, currentInd := getLength(currentInd, fileCont)
 	expirySize, currentInd := getLength(currentInd, fileCont)
-	fmt.Println("The hash size and expiry size is ", hashSize, expirySize)
+	fmt.Println("The hash size and expiry size is  with last Index", hashSize, expirySize, currentInd)
 	return string(fileCont[prevInd:currentInd]), currentInd
 
 }
