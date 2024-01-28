@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"flag"
 	"fmt"
 	"strconv"
 	"time"
@@ -102,11 +103,11 @@ func handleConnection(conn net.Conn) {
 
 func main() {
 
-	// dir := flag.String("dir", "", "The directory where RDB files are stored")
-	// dbfilename := flag.String("dbfilename", "", "The name of the RDB file")
-	// flag.Parse()
-	// fmt.Println("dir:", *dir)
-	// fmt.Println("dbfilename:", *dbfilename)
+	dir := flag.String("dir", "", "The directory where RDB files are stored")
+	dbfilename := flag.String("dbfilename", "", "The name of the RDB file")
+	flag.Parse()
+	fmt.Println("dir:", *dir)
+	fmt.Println("dbfilename:", *dbfilename)
 
 	l, err := net.Listen("tcp", "0.0.0.0:6379")
 	fmt.Println("Listening to connections", l)
