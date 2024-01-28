@@ -184,6 +184,6 @@ func (rdb *rdbFile) handleKeyValue(currentInd int, fileCont []byte, hasExpiry bo
 		isLimited: hasExpiry,
 	}
 
-	return currentInd
+	return currentInd + valueLength
 
 }
