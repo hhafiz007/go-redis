@@ -144,7 +144,7 @@ func main() {
 			os.Exit(1)
 		}
 
-		// myMap = make(map[string]redisValue)
+		myMap = make(map[string]redisValue)
 		fileContent, err := os.ReadFile(fmt.Sprintf("%s/%s", configValues.dir, configValues.dbfilename))
 		_ = unMarshalRdb(fileContent)
 
