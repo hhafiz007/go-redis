@@ -3,12 +3,31 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"time"
 
 	"net"
 	"os"
 )
 
-var myMap map[string]string
+var myMap map[string]redisValue
+
+type redisValue struct {
+	value string
+	time  int64
+}
+
+func setRedisValue(val string) redisValue {
+	currentTimeNano := time.Now().UnixNano()
+
+	// Convert nanoseconds to milliseconds
+	currentTimeMillis := currentTimeNano / int64(time.Millisecond)
+
+	return redisValue{
+		value: val,
+		time:  currentTimeMillis,
+	}
+
+}
 
 func handleConnection(conn net.Conn) {
 	defer conn.Close()
@@ -40,13 +59,14 @@ func handleConnection(conn net.Conn) {
 
 			key := string(redisArguments[0].bytes)
 			value := string(redisArguments[1].bytes)
-			myMap[key] = value
-			fmt.Printf("Sending set to client with key and value %s %s\n", key, value)
+			myMap[key] = setRedisValue(value)
+
+			fmt.Printf("Sending set to client with key and value and time %s %s %d\n", key, myMap[key].value, myMap[key].time)
 			conn.Write([]byte("+OK\r\n"))
 		case "get":
 			key := string(redisArguments[0].bytes)
-			value := myMap[key]
-			fmt.Printf("Sending set to client with key and value %s %s\n", key, value)
+			value := myMap[key].value
+			fmt.Printf("Sending get to client with key and value %s %s\n", key, value)
 			conn.Write([]byte(fmt.Sprintf("+%s\r\n", value)))
 
 		}
@@ -64,7 +84,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	myMap = make(map[string]string)
+	myMap = make(map[string]redisValue)
 
 	// Will keep on running a for loop for accepting mu
 	for {
