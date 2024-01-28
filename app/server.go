@@ -71,8 +71,6 @@ func handleConnection(conn net.Conn) {
 			value := string(redisArguments[1].bytes)
 			arg3 := []byte("0")
 
-			fmt.Println(value)
-
 			if len(redisArguments) >= 3 {
 				arg3 = redisArguments[3].bytes
 			}
