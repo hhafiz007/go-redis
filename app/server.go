@@ -42,7 +42,7 @@ func handleConnection(conn net.Conn) {
 			value := string(redisArguments[1].bytes)
 			myMap[key] = value
 			fmt.Printf("Sending set to client with key and value %s %s\n", key, value)
-			conn.Write([]byte("+PONG\r\n"))
+			conn.Write([]byte("+OK\r\n"))
 
 		}
 
