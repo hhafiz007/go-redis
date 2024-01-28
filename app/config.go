@@ -92,7 +92,7 @@ func unMarshalRdb(fileCont []byte) {
 
 func (rdb *rdbFile) handleAuxilliary(currentInd int, fileCont []byte) (string, int) {
 
-	prevInd := currentInd
+	prevInd := currentInd + 1
 
 	for {
 		if currentInd == DatabaseSelector {
@@ -100,7 +100,7 @@ func (rdb *rdbFile) handleAuxilliary(currentInd int, fileCont []byte) (string, i
 		}
 		currentInd += 1
 	}
-
+	fmt.Println("Auxiliary String is ", string(fileCont[prevInd:currentInd]), currentInd)
 	return string(fileCont[prevInd:currentInd]), currentInd
 
 }
