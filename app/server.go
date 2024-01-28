@@ -102,6 +102,7 @@ func handleConnection(conn net.Conn) {
 		case "keys":
 			fileContent, _ := os.ReadFile(fmt.Sprintf("%s/%s", configValues.dir, configValues.dbfilename))
 			_ = unMarshalRdb(fileContent)
+			fmt.Println(myMap)
 
 			keysCommand := string(redisArguments[0].bytes)
 			var response string
