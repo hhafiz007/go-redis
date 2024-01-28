@@ -112,7 +112,7 @@ func parseBulkString(stream *bufio.Reader) (RedisMessage, error) {
 	_, err = stream.Read(data)
 
 	if err != nil {
-		fmt.Println("Error readaing bulk string")
+		fmt.Println("Error reaadaing bulk string")
 		return RedisMessage{}, err
 	}
 
