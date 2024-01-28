@@ -107,8 +107,8 @@ func handleConnection(conn net.Conn) {
 			}
 
 			// Convert the []byte to a string and print it
-			fileContentStr := string(fileContent)
-			fmt.Println(fileContentStr)
+			// fileContentStr := string(fileContent)
+			fmt.Println(fileContent)
 
 		}
 
