@@ -78,7 +78,7 @@ func handleConnection(conn net.Conn) {
 
 			myMap[key] = setRedisValue(value, arg3)
 
-			fmt.Printf("Sending set to client with key and value and time %s %s %d\n", key, myMap[key].value, myMap[key].time)
+			fmt.Printf("Sending set ato client with key and value and time %s %s %d\n", key, myMap[key].value, myMap[key].time)
 			conn.Write([]byte("+OK\r\n"))
 		case "get":
 			key := string(redisArguments[0].bytes)
