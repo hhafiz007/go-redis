@@ -1,6 +1,10 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"log"
+	"os"
+)
 
 type config struct {
 	dir        string
@@ -27,5 +31,15 @@ func (cn *config) encodeConfigValues(configType string) string {
 	} else {
 		configTypeValue = cn.dbfilename
 	}
+
+	fileContent, err := os.ReadFile(fmt.Sprintf("%s/%s", configValues.dir, configValues.dbfilename))
+	if err != nil {
+		log.Fatal("Error reading file:", err)
+	}
+
+	// Convert the []byte to a string and print it
+	fileContentStr := string(fileContent)
+	fmt.Println(fileContentStr)
+
 	return fmt.Sprintf("*2\r\n$%d\r\n%s\r\n$%d\r\n%s\r\n", len(configType), configType, len(configTypeValue), configTypeValue)
 }
