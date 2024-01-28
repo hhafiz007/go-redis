@@ -57,12 +57,12 @@ func (cn *config) encodeConfigValues(configType string) string {
 func unMarshalRdb(fileCont []byte) {
 
 	rdbDumpData := rdbFile{}
-	rdbDumpData.magicString = string(fileCont[:4])
-	rdbDumpData.version = string(fileCont[4:8])
+	rdbDumpData.magicString = string(fileCont[:5])
+	rdbDumpData.version = string(fileCont[5:9])
 
 	fmt.Println("Welcome to unmarshal with magicString and version", rdbDumpData.magicString, rdbDumpData.version)
 
-	currentInd := 8
+	currentInd := 9
 
 	for {
 
