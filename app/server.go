@@ -82,6 +82,11 @@ func handleConnection(conn net.Conn) {
 			fmt.Printf("Sending set ato client with key and value and time %s %s %d\n", key, myMap[key].value, myMap[key].time)
 			conn.Write([]byte("+OK\r\n"))
 		case "get":
+			if len(*&configValues.dir) > 0 {
+				fileContent, _ := os.ReadFile(fmt.Sprintf("%s/%s", configValues.dir, configValues.dbfilename))
+				fmt.Println(fileContent)
+				_ = unMarshalRdb(fileContent)
+			}
 			key := string(redisArguments[0].bytes)
 			value := myMap[key].value
 			currentTimeMillis := time.Now().UnixNano() / int64(time.Millisecond)
@@ -134,11 +139,6 @@ func main() {
 	fmt.Println("dir:", *dir, len(*dir))
 	fmt.Println("dbfilename:", *dbfilename)
 	configValues = initConfigValues(dir, dbfilename)
-	if len(*dir) > 0 {
-		fileContent, _ := os.ReadFile(fmt.Sprintf("%s/%s", configValues.dir, configValues.dbfilename))
-		fmt.Println(fileContent)
-		_ = unMarshalRdb(fileContent)
-	}
 
 	switch {
 
