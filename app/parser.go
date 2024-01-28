@@ -105,7 +105,7 @@ func parseBulkString(stream *bufio.Reader) (RedisMessage, error) {
 		return RedisMessage{}, err
 	}
 
-	length, _ := strconv.Atoi(string(bytes[0]))
+	length, _ := strconv.Atoi(string(bytes[0 : len(bytes)-2]))
 	data := make([]byte, length+2)
 	fmt.Println("The length of data is ", length, bytes)
 
