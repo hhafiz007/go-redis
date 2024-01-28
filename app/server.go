@@ -100,8 +100,7 @@ func handleConnection(conn net.Conn) {
 			fmt.Printf("Sending Config to client : %s\n", configEncoded)
 			conn.Write([]byte(configEncoded))
 		case "keys":
-			fileContent, _ := os.ReadFile(fmt.Sprintf("%s/%s", configValues.dir, configValues.dbfilename))
-			_ = unMarshalRdb(fileContent)
+
 			fmt.Println(myMap)
 
 			keysCommand := string(redisArguments[0].bytes)
@@ -135,6 +134,10 @@ func main() {
 	fmt.Println("dir:", *dir, len(*dir))
 	fmt.Println("dbfilename:", *dbfilename)
 	configValues = initConfigValues(dir, dbfilename)
+	if len(*dir) > 0 {
+		fileContent, _ := os.ReadFile(fmt.Sprintf("%s/%s", configValues.dir, configValues.dbfilename))
+		_ = unMarshalRdb(fileContent)
+	}
 
 	switch {
 
