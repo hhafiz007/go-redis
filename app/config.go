@@ -83,7 +83,7 @@ func unMarshalRdb(fileCont []byte) {
 		}
 
 		if int(fileCont[currentInd]) == fileEnd {
-			fmt.Fprintf("breaking")
+			fmt.Println("breaking")
 			break
 		}
 
