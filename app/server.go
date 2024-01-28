@@ -28,7 +28,7 @@ func setRedisValue(val string, limit []byte) redisValue {
 
 	isLimitedLocal := true
 	if deadLine == 0 {
-		isLimitedLocal = true
+		isLimitedLocal = false
 	}
 
 	return redisValue{
@@ -83,8 +83,16 @@ func handleConnection(conn net.Conn) {
 		case "get":
 			key := string(redisArguments[0].bytes)
 			value := myMap[key].value
-			fmt.Printf("Sending get to cliegnt with key and value %s %s\n", key, value)
-			conn.Write([]byte(fmt.Sprintf("+%s\r\n", value)))
+			currentTimeMillis := time.Now().UnixNano() / int64(time.Millisecond)
+			if myMap[key].isLimited == true && currentTimeMillis > myMap[key].time {
+
+				conn.Write([]byte(fmt.Sprintf("$-1\r\n")))
+
+			} else {
+
+				fmt.Printf("Sending get to cliegnt with key and value %s %s\n", key, value)
+				conn.Write([]byte(fmt.Sprintf("+%s\r\n", value)))
+			}
 
 		}
 
