@@ -105,6 +105,7 @@ func handleConnection(conn net.Conn) {
 			if err != nil {
 				log.Fatal("Error reading file:", err)
 			}
+			fmt.Println("Welcoe=me to keys")
 			unMarshalRdb(fileContent)
 			return
 
