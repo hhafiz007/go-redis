@@ -82,7 +82,7 @@ func handleConnection(conn net.Conn) {
 		case "get":
 			key := string(redisArguments[0].bytes)
 			value := myMap[key].value
-			fmt.Printf("Sending get to client with key and value %s %s\n", key, value)
+			fmt.Printf("Sending get to clieqnt with key and value %s %s\n", key, value)
 			conn.Write([]byte(fmt.Sprintf("+%s\r\n", value)))
 
 		}
