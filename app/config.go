@@ -100,7 +100,7 @@ func (rdb *rdbFile) handleAuxilliary(currentInd int, fileCont []byte) (string, i
 		}
 		currentInd += 1
 	}
-	fmt.Println("Auxiliary String is ", string(fileCont[prevInd:currentInd]), currentInd)
+	fmt.Printf("Auxiliary String is %s and next Index is %d ", string(fileCont[prevInd:currentInd]), currentInd)
 	return string(fileCont[prevInd:currentInd]), currentInd
 
 }
