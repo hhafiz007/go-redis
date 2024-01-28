@@ -116,7 +116,7 @@ func handleConnection(conn net.Conn) {
 				response = fmt.Sprintf("$%d\r\n%s\r\n", len(rdbDumpData.data[keysCommand].value), rdbDumpData.data[keysCommand].value)
 			}
 
-			fmt.Printf("The response is", response)
+			fmt.Println("The response is", response)
 			conn.Write([]byte(response))
 
 			// Convert the []byte to a string and print it
