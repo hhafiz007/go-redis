@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"flag"
 	"fmt"
+	"log"
 	"strconv"
 	"time"
 
@@ -99,6 +100,15 @@ func handleConnection(conn net.Conn) {
 			configEncoded := configValues.encodeConfigValues(configType)
 			fmt.Printf("Sending Config to client : %s\n", configEncoded)
 			conn.Write([]byte(configEncoded))
+		case "keys":
+			fileContent, err := os.ReadFile(fmt.Sprintf("%s/%s", configValues.dir, configValues.dbfilename))
+			if err != nil {
+				log.Fatal("Error reading file:", err)
+			}
+
+			// Convert the []byte to a string and print it
+			fileContentStr := string(fileContent)
+			fmt.Println(fileContentStr)
 
 		}
 
