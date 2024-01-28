@@ -70,6 +70,7 @@ func handleConnection(conn net.Conn) {
 			key := string(redisArguments[0].bytes)
 			value := string(redisArguments[1].bytes)
 			arg3 := []byte("0")
+			fmt.Println("Value of set is ", value)
 
 			if len(redisArguments) >= 3 {
 				arg3 = redisArguments[3].bytes
