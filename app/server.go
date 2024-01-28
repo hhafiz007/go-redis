@@ -122,7 +122,7 @@ func handleConnection(conn net.Conn) {
 				response = fmt.Sprintf("$%d\r\n%s\r\n", len(myMap[keysCommand].value), myMap[keysCommand].value)
 			}
 
-			fmt.Println("The response is", response)
+			fmt.Println("The response will", response)
 			conn.Write([]byte(response))
 			return
 
