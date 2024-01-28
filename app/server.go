@@ -146,7 +146,8 @@ func main() {
 
 		myMap = make(map[string]redisValue)
 		fileContent, err := os.ReadFile(fmt.Sprintf("%s/%s", configValues.dir, configValues.dbfilename))
-		_ = unMarshalRdb(fileContent)
+		rdbFileData := unMarshalRdb(fileContent)
+		fmt.Println(rdbFileData)
 
 		// Will keep on running a for loop for accepting mu
 		for {
