@@ -172,7 +172,7 @@ func (rdb *rdbFile) handleKeyValue(currentInd int, fileCont []byte, hasExpiry bo
 	valueLength, currentInd := getLength(currentInd, fileCont)
 	value := string(fileCont[currentInd : currentInd+valueLength])
 
-	fmt.Println("The Keysize and valuesize from rdb file are", keySizeInd, valueSizeInd)
+	// fmt.Println("The Keysize and valuesize from rdb file are", keySizeInd, valueSizeInd)
 
 	fmt.Printf("The Key and value from rdb file are %s and %s", key, value)
 
