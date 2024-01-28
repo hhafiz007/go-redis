@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"flag"
 	"fmt"
-	"log"
 	"strconv"
 	"time"
 
@@ -101,19 +100,14 @@ func handleConnection(conn net.Conn) {
 			fmt.Printf("Sending Config to client : %s\n", configEncoded)
 			conn.Write([]byte(configEncoded))
 		case "keys":
-			fileContent, err := os.ReadFile(fmt.Sprintf("%s/%s", configValues.dir, configValues.dbfilename))
-			if err != nil {
-				log.Fatal("Error reading file:", err)
-			}
-			fmt.Println("Welcoe=me to keys")
-			rdbDumpData := unMarshalRdb(fileContent)
+
 			keysCommand := string(redisArguments[0].bytes)
 			var response string
 
 			if keysCommand == "*" {
-				response = getRespKeyArray(rdbDumpData.data)
+				response = getRespKeyArray(myMap)
 			} else {
-				response = fmt.Sprintf("$%d\r\n%s\r\n", len(rdbDumpData.data[keysCommand].value), rdbDumpData.data[keysCommand].value)
+				response = fmt.Sprintf("$%d\r\n%s\r\n", len(myMap[keysCommand].value), myMap[keysCommand].value)
 			}
 
 			fmt.Println("The response is", response)
@@ -152,8 +146,7 @@ func main() {
 
 		// myMap = make(map[string]redisValue)
 		fileContent, err := os.ReadFile(fmt.Sprintf("%s/%s", configValues.dir, configValues.dbfilename))
-		rdbDumpData := unMarshalRdb(fileContent)
-		myMap = rdbDumpData.data
+		_ = unMarshalRdb(fileContent)
 
 		// Will keep on running a for loop for accepting mu
 		for {
