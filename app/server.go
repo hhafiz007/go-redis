@@ -160,7 +160,7 @@ func main() {
 			conn, err := l.Accept()
 
 			if err != nil {
-				fmt.Println("Failed to bind to port 6379")
+				fmt.Println("Failed to binad to port 6379")
 				os.Exit(1)
 			}
 			go handleConnection(conn)
