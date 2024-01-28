@@ -95,7 +95,7 @@ func (rdb *rdbFile) handleAuxilliary(currentInd int, fileCont []byte) (string, i
 	prevInd := currentInd + 1
 
 	for {
-		if currentInd == DatabaseSelector {
+		if int(fileCont[currentInd]) == DatabaseSelector {
 			break
 		}
 		currentInd += 1
@@ -110,7 +110,7 @@ func (rdb *rdbFile) handledtabaseSelector(currentInd int, fileCont []byte) (int,
 	// prevInd := currentInd
 
 	for {
-		if currentInd == ResizeDb {
+		if int(fileCont[currentInd]) == ResizeDb {
 			break
 		}
 		currentInd += 1
