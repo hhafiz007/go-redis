@@ -56,7 +56,9 @@ func (cn *config) encodeConfigValues(configType string) string {
 
 func unMarshalRdb(fileCont []byte) {
 
-	rdbDumpData := rdbFile{}
+	rdbDumpData := rdbFile{
+		data: make(map[string]redisValue),
+	}
 	rdbDumpData.magicString = string(fileCont[:5])
 	rdbDumpData.version = string(fileCont[5:9])
 
