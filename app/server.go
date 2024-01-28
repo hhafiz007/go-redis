@@ -136,6 +136,7 @@ func main() {
 	configValues = initConfigValues(dir, dbfilename)
 	if len(*dir) > 0 {
 		fileContent, _ := os.ReadFile(fmt.Sprintf("%s/%s", configValues.dir, configValues.dbfilename))
+		fmt.Println(fileContent)
 		_ = unMarshalRdb(fileContent)
 	}
 
