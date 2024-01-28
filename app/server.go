@@ -106,7 +106,7 @@ func main() {
 	dir := flag.String("dir", "", "The directory where RDB files are stored")
 	dbfilename := flag.String("dbfilename", "", "The name of the RDB file")
 	flag.Parse()
-	fmt.Println("dir:", *dir)
+	fmt.Println("dir:", *dir, len(*dir))
 	fmt.Println("dbfilename:", *dbfilename)
 
 	l, err := net.Listen("tcp", "0.0.0.0:6379")
