@@ -27,7 +27,7 @@ func handleRedisMessage(stream *bufio.Reader) (RedisMessage, error) {
 
 	fmt.Println("Data Type", dataType)
 	if err != nil {
-		fmt.Println("Error whiqle reading dataType", err)
+		fmt.Println("Error whiqle readingdataType", err)
 		// return RedisMessage{}, err
 	}
 
