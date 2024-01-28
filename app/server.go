@@ -105,10 +105,12 @@ func handleConnection(conn net.Conn) {
 			if err != nil {
 				log.Fatal("Error reading file:", err)
 			}
+			unMarshalRdb(fileContent)
+			return
 
 			// Convert the []byte to a string and print it
 			// fileContentStr := string(fileContent)
-			fmt.Println(fileContent)
+			// fmt.Println(fileContent)
 
 		}
 
