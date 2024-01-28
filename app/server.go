@@ -102,7 +102,7 @@ func handleConnection(conn net.Conn) {
 		case "config":
 			configType := string(redisArguments[1].bytes)
 			configEncoded := configValues.encodeConfigValues(configType)
-			fmt.Printf("Sending Config to client : %s\n", configEncoded)
+			fmt.Printf("Sendiing Config to client : %s\n", configEncoded)
 			conn.Write([]byte(configEncoded))
 		case "keys":
 			if len(*&configValues.dir) > 0 {
