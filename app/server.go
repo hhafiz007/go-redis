@@ -100,6 +100,8 @@ func handleConnection(conn net.Conn) {
 			fmt.Printf("Sending Config to client : %s\n", configEncoded)
 			conn.Write([]byte(configEncoded))
 		case "keys":
+			fileContent, _ := os.ReadFile(fmt.Sprintf("%s/%s", configValues.dir, configValues.dbfilename))
+			_ = unMarshalRdb(fileContent)
 
 			keysCommand := string(redisArguments[0].bytes)
 			var response string
@@ -145,9 +147,8 @@ func main() {
 		}
 
 		myMap = make(map[string]redisValue)
-		fileContent, err := os.ReadFile(fmt.Sprintf("%s/%s", configValues.dir, configValues.dbfilename))
-		rdbFileData := unMarshalRdb(fileContent)
-		fmt.Println(rdbFileData)
+
+		// fmt.Println(rdbFileData)
 
 		// Will keep on running a for loop for accepting mu
 		for {
