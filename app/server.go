@@ -13,8 +13,9 @@ import (
 var myMap map[string]redisValue
 
 type redisValue struct {
-	value string
-	time  int64
+	value     string
+	time      int64
+	isLimited bool
 }
 
 func setRedisValue(val string, limit []byte) redisValue {
@@ -25,9 +26,15 @@ func setRedisValue(val string, limit []byte) redisValue {
 	// Convert nanoseconds to milliseconds
 	currentTimeMillis := (currentTimeNano / int64(time.Millisecond)) + int64(deadLine)
 
+	isLimitedLocal := true
+	if deadLine == 0 {
+		isLimitedLocal = true
+	}
+
 	return redisValue{
-		value: val,
-		time:  currentTimeMillis,
+		value:     val,
+		time:      currentTimeMillis,
+		isLimited: isLimitedLocal,
 	}
 
 }
@@ -62,7 +69,13 @@ func handleConnection(conn net.Conn) {
 
 			key := string(redisArguments[0].bytes)
 			value := string(redisArguments[1].bytes)
-			myMap[key] = setRedisValue(value, redisArguments[3].bytes)
+			arg3 := []byte("0")
+
+			if len(redisArguments) >= 3 {
+				arg3 = redisArguments[3].bytes
+			}
+
+			myMap[key] = setRedisValue(value, arg3)
 
 			fmt.Printf("Sending set to client with key and value and time %s %s %d\n", key, myMap[key].value, myMap[key].time)
 			conn.Write([]byte("+OK\r\n"))
