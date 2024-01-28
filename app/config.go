@@ -162,12 +162,15 @@ func (rdb *rdbFile) handleResizeDb(currentInd int, fileCont []byte) (string, int
 func (rdb *rdbFile) handleKeyValue(currentInd int, fileCont []byte, hasExpiry bool, time int64) int {
 
 	currentInd += 1
+
 	keySizeInd := currentInd
 	_, currentInd = getLength(currentInd, fileCont)
 	key := string(fileCont[keySizeInd+1 : currentInd])
 	valueSizeInd := currentInd
 	_, currentInd = getLength(currentInd, fileCont)
 	value := string(fileCont[valueSizeInd+1 : currentInd])
+
+	fmt.Println("The Keysize and valuesize from rdb file are", keySizeInd, valueSizeInd)
 
 	fmt.Println("The Key and value from rdb file are", key, value)
 
