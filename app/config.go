@@ -221,7 +221,7 @@ func (rdb *rdbFile) handleExpiryMiliSeconds(currentInd int, fileCont []byte) int
 
 	nextInd := currentInd + 8
 
-	fmt.Printf("The expiry string is %s and in miliSecons is %d\n", expiryTime)
+	fmt.Printf("The expiry string is %s and in miliSecons is %d\n", expiryString, expiryTime)
 	return rdb.handleKeyValue(nextInd, fileCont, true, int64(expiryTime))
 
 }
