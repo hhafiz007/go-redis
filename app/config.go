@@ -217,6 +217,7 @@ func (rdb *rdbFile) handleExpirySeconds(currentInd int, fileCont []byte) int {
 func (rdb *rdbFile) handleExpiryMiliSeconds(currentInd int, fileCont []byte) int {
 
 	currentInd += 1
+	fmt.Println(fileCont[currentInd : currentInd+8])
 	expiryTime := int64(binary.BigEndian.Uint64(fileCont[currentInd : currentInd+8]))
 
 	nextInd := currentInd + 8
