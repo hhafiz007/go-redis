@@ -206,7 +206,7 @@ func (rdb *rdbFile) handleKeyValue(currentInd int, fileCont []byte, hasExpiry bo
 func (rdb *rdbFile) handleExpirySeconds(currentInd int, fileCont []byte) int {
 
 	currentInd += 1
-	expiryTime, _ := strconv.Atoi(string(fileCont[currentInd : currentInd+4]))
+	expiryTime := int64(binary.BigEndian.Uint32(fileCont[currentInd : currentInd+4]))
 	nextInd := currentInd + 4
 	expiryMiliSeconds := expiryTime * 1000
 	fmt.Printf("The expiry in milliseconds from seconds is is %d\n", expiryTime)

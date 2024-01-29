@@ -90,13 +90,14 @@ func handleConnection(conn net.Conn) {
 			key := string(redisArguments[0].bytes)
 			value := myMap[key].value
 			currentTimeMillis := time.Now().UnixNano() / int64(time.Millisecond)
+
 			if myMap[key].isLimited == true && currentTimeMillis > myMap[key].time {
 
 				conn.Write([]byte(fmt.Sprintf("$-1\r\n")))
 
 			} else {
 
-				fmt.Printf("Sending get to cliegnt with key and value %s %s\n", key, value)
+				fmt.Printf("Sending get to cliegnt with key and value and time%s %s %d\n", key, value, currentTimeMillis)
 				conn.Write([]byte(fmt.Sprintf("+%s\r\n", value)))
 			}
 		case "config":
