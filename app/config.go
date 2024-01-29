@@ -194,7 +194,7 @@ func (rdb *rdbFile) handleKeyValue(currentInd int, fileCont []byte, hasExpiry bo
 		time:      time,
 		isLimited: hasExpiry,
 	}
-	fmt.Printf("The Key and value  and time from rdb file are %s and %s  and %d", key, value, time)
+	fmt.Printf("The Key and value  and time from rdb file are %s and %s  and %d\n", key, value, time)
 
 	currentInd += valueLength
 	// fmt.Printf("index value is ,%d", int(fileCont[currentInd]))
@@ -208,6 +208,7 @@ func (rdb *rdbFile) handleExpirySeconds(currentInd int, fileCont []byte) int {
 	expiryTime, _ := strconv.Atoi(string(fileCont[currentInd : currentInd+4]))
 	nextInd := currentInd + 4
 	expiryMiliSeconds := expiryTime * 1000
+	fmt.Printf("The expiry in milliseconds from seconds is is %d\n", expiryTime)
 
 	return rdb.handleKeyValue(nextInd, fileCont, true, int64(expiryMiliSeconds))
 
@@ -217,6 +218,8 @@ func (rdb *rdbFile) handleExpiryMiliSeconds(currentInd int, fileCont []byte) int
 	currentInd += 1
 	expiryTime, _ := strconv.Atoi(string(fileCont[currentInd : currentInd+8]))
 	nextInd := currentInd + 8
+
+	fmt.Printf("The expiry in miliSecons is %d\n", expiryTime)
 	return rdb.handleKeyValue(nextInd, fileCont, true, int64(expiryTime))
 
 }
