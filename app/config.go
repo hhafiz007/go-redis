@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/binary"
 	"fmt"
 	"strconv"
 )
@@ -216,12 +217,11 @@ func (rdb *rdbFile) handleExpirySeconds(currentInd int, fileCont []byte) int {
 func (rdb *rdbFile) handleExpiryMiliSeconds(currentInd int, fileCont []byte) int {
 
 	currentInd += 1
-	expiryString := string(fileCont[currentInd : currentInd+8])
-	expiryTime, _ := strconv.Atoi(expiryString)
+	expiryTime := int64(binary.BigEndian.Uint64(fileCont[currentInd : currentInd+8]))
 
 	nextInd := currentInd + 8
 
-	fmt.Printf("The expiry string is %s and in miliSecons is %d\n", expiryString, expiryTime)
+	fmt.Printf("The time and in miliSecons is %d\n", expiryTime)
 	return rdb.handleKeyValue(nextInd, fileCont, true, int64(expiryTime))
 
 }
