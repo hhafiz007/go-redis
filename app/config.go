@@ -78,6 +78,10 @@ func unMarshalRdb(fileCont []byte) rdbFile {
 			rdbDumpData.resizeDb, currentInd = rdbDumpData.handleResizeDb(currentInd, fileCont)
 		case stringEncoding:
 			currentInd = rdbDumpData.handleKeyValue(currentInd, fileCont, false, 0)
+		case ExpiryMilliSeconds:
+			currentInd = rdbDumpData.handleExpiryMiliSeconds(currentInd, fileCont)
+		case ExpirySeconds:
+			currentInd = rdbDumpData.handleExpirySeconds(currentInd, fileCont)
 
 		default:
 			break
@@ -197,5 +201,23 @@ func (rdb *rdbFile) handleKeyValue(currentInd int, fileCont []byte, hasExpiry bo
 	// fmt.Printf("index value is ,%d", int(fileCont[currentInd]))
 
 	return currentInd
+
+}
+func (rdb *rdbFile) handleExpirySeconds(currentInd int, fileCont []byte) int {
+
+	currentInd += 1
+	expiryTime, _ := strconv.Atoi(string(fileCont[currentInd : currentInd+4]))
+	nextInd := currentInd + 4
+	expiryMiliSeconds := expiryTime * 1000
+
+	return rdb.handleKeyValue(nextInd, fileCont, true, int64(expiryMiliSeconds))
+
+}
+func (rdb *rdbFile) handleExpiryMiliSeconds(currentInd int, fileCont []byte) int {
+
+	currentInd += 1
+	expiryTime, _ := strconv.Atoi(string(fileCont[currentInd : currentInd+8]))
+	nextInd := currentInd + 8
+	return rdb.handleKeyValue(nextInd, fileCont, true, int64(expiryTime))
 
 }
