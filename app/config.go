@@ -183,8 +183,6 @@ func (rdb *rdbFile) handleKeyValue(currentInd int, fileCont []byte, hasExpiry bo
 
 	// fmt.Println("The Keysize and valuesize from rdb file are", keySizeInd, valueSizeInd)
 
-	fmt.Printf("The Key and value from rdb file are %s and %s", key, value)
-
 	rdb.data[key] = redisValue{
 		value:     value,
 		time:      time,
@@ -196,6 +194,7 @@ func (rdb *rdbFile) handleKeyValue(currentInd int, fileCont []byte, hasExpiry bo
 		time:      time,
 		isLimited: hasExpiry,
 	}
+	fmt.Printf("The Key and value  and time from rdb file are %s and %s  and %d", key, value, time)
 
 	currentInd += valueLength
 	// fmt.Printf("index value is ,%d", int(fileCont[currentInd]))
